@@ -1,3 +1,9 @@
-const test = document.createElement('h1');
-test.textContent = 'Hello!!!';
-document.body.appendChild(test);
+import '../page/style.css';
+import {createHeader, createMainCards} from "./createPageMarkup";
+import {createMenu} from "./createPageMarkup";
+import {createCardsContainer} from "./createPageMarkup";
+
+createHeader();
+const arrListMenu = createMenu();
+createCardsContainer();
+createMainCards();

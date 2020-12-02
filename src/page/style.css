@@ -1,0 +1,137 @@
+* {
+    font-family: Arial, sans-serif;
+    font-weight: normal;
+    margin: 0;
+    box-sizing: border-box;
+
+}
+
+header {
+    position: sticky;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background: #FF5722;
+
+
+
+    top: 0;
+    height: 70px;
+    border-bottom: 4px solid #E64A19;
+}
+
+.under-head {
+    padding: 0 20px 0 20px;
+    height: 70px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.status-page {
+    font-size: 1.5em;
+}
+
+.btn-play {
+    width: 60px;
+    height: 30px;
+}
+
+.title-text {
+    font-size: 2.5em;
+    margin-right: 30px;
+    font-weight: normal;
+    color: #212121;
+}
+
+.burger-btn {
+    width: 40px;
+    height: 40px;
+    margin-left: 30px;
+    transition: 0.3s all;
+    cursor: pointer;
+}
+
+.bg-menu {
+    overflow: hidden;
+    position: absolute;
+    left: -320px;
+    width: 320px;
+    height: 700px;
+    background: #FFFFFF;
+    display: block;
+    font-size: 1.5em;
+
+
+
+    border-right: 4px solid #E64A19;
+    border-bottom: 4px solid #E64A19;
+
+    transition: 0.3s all;
+
+    z-index: 10;
+
+}
+
+.list-container {
+    min-width: 0;
+    padding-right: 20px;
+    height: 700px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: flex-start;
+}
+
+.element-menu {
+    position: relative;
+    color: #212121;
+    transition: 0.1s all;
+    cursor: pointer;
+}
+
+.active-element-menu {
+    font-weight: bold;
+    color: #E64A19;
+}
+
+.cards-container {
+    margin-left: auto;
+    margin-right: auto;
+    width: 95%;
+    max-width: 1400px;
+    min-height: 750px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cards-main {
+    cursor: pointer;
+    margin-top: 30px;
+    width: 306px;
+    height: 250px;
+    transition: 0.1s all;
+    border: 4px solid #E64A19;
+    border-radius: 5px;
+    background: #FF9800;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+.cards-main-img {
+    width: 300px;
+    height: 200px;
+    border-radius: 5px;
+}
+
+.cards-main > p {
+    font-size: 1.5em;
+    margin-bottom: 6px;
+}
