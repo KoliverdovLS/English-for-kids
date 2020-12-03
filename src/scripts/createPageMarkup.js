@@ -1,11 +1,11 @@
 import '../page/style.css';
 import burgerIcon from '../images/Burger.png';
 import {
-  dance, swim, cry, fly, cat, bird, blouse, smile,
-} from '../images/cards';
+  dance, swim, cry, cat, bird, blouse, smile, friendly,
+} from '../images/cards/_exportImage';
 
-const arrMainCardsImg = [dance, swim, cry, fly, cat, bird, blouse, smile];
-const arrMainCardsText = ['Main page', 'Actions (set A)', 'Actions (set B)', 'Animals (set A)', 'Animals (set B)', 'Clothes', 'Emotions', 'Adjective', 'Actions (set C)'];
+const arrMainCardsImg = [dance, swim, cry, friendly, cat, bird, blouse, smile];
+const arrMainCardsText = ['Actions (set A)', 'Actions (set B)', 'Actions (set C)', 'Adjective', 'Animals (set A)', 'Animals (set B)', 'Clothes', 'Emotions'];
 
 // Функция принимает родительский элемент (контейнер для элементов меню)
 // children - текстовый контент для каждого элемента
@@ -45,7 +45,7 @@ export function createMenu() {
   listContainer.classList.add('list-container');
   // Ниже функция которая затолкает всех детей с нужными нам текстовыми контентами в список меню,
   // и вернет ДОМ элементы этого списка
-  const arrListMenu = addElementToListMenu(listContainer, 'Main page', 'Actions (set A)', 'Actions (set B)', 'Animals (set A)', 'Animals (set B)', 'Clothes', 'Emotions', 'Adjective', 'Actions (set C)');
+  const arrListMenu = addElementToListMenu(listContainer, 'Main Page', 'Action (set A)', 'Action (set B)', 'Action (set C)', 'Adjective', 'Animal (set A)', 'Animal (set B)', 'Clothes', 'Emotion');
 
   menu.appendChild(listContainer);
   document.body.appendChild(menu);
@@ -78,6 +78,7 @@ export function createCardsContainer() {
   underHead.appendChild(btnPlayTrain);
   document.body.appendChild(underHead);
   document.body.appendChild(cardsContainer);
+  return cardsContainer;
 }
 
 export function createMainCards() {
@@ -90,9 +91,11 @@ export function createMainCards() {
     imaga.classList.add('cards-main-img');
     textInCards.textContent = arrMainCardsText[i];
     card.classList.add('cards-main');
+    card.id = `main${i}`;
     card.appendChild(imaga);
     card.appendChild(textInCards);
     document.querySelector('.cards-container').appendChild(card);
     arrCardsMain.push(card);
   }
+  return arrCardsMain;
 }
