@@ -2,36 +2,11 @@ import * as image from '../images/cards/_exportImage';
 import * as audio from '../audio/_exportAudio';
 import revers from '../images/revers.png';
 import hideMainCards from './hideMainCards';
+import {playMode} from './playMode';
+import constansApp from './app.constans';
 
-const categoryArr = ['Main Page', 'Action (set A)', 'Action (set B)', 'Action (set C)', 'Adjective', 'Animal (set A)', 'Animal (set B)', 'Clothes', 'Emotion'];
-
-function createCategoriesArr() {
-  const ActionA = ['cry', 'dance', 'dive', 'draw', 'fish', 'fly', 'hug', 'jump'];
-  const ActionB = ['open', 'play', 'point', 'ride', 'run', 'sing', 'skip', 'swim'];
-  const ActionC = ['argue', 'build', 'carry', 'catch', 'drive', 'drop', 'pull', 'push'];
-  const Adjective = ['big', 'small', 'fast', 'slow', 'friendly', 'unfriendly', 'young', 'old'];
-  const AnimalA = ['cat', 'chick', 'chicken', 'dog', 'horse', 'pig', 'rabbit', 'sheep'];
-  const AnimalB = ['bird', 'fish', 'frog', 'giraffe', 'lion', 'mouse', 'turtle', 'dolphin'];
-  const Clothes = ['skirt', 'pants', 'blouse', 'dress', 'boot', 'shirt', 'coat', 'shoe'];
-  const Emotion = ['sad', 'angry', 'happy', 'tired', 'surprised', 'scared', 'smile', 'laugh'];
-  const Categories = [ActionA, ActionB, ActionC, Adjective, AnimalA, AnimalB, Clothes, Emotion];
-  return Categories;
-}
-
-function createCategoriesArrRu() {
-  const ActionA = ['плакать', 'танцевать', 'нырять', 'рисовать', 'ловить рыбу', 'летать', 'обнимать', 'прыгать'];
-  const ActionB = ['открыть', 'играть', 'точка', 'ездить', 'бегать', 'петь', 'скакать', 'плавать'];
-  const ActionC = ['спорить', 'строить', 'нести', 'ловить', 'водить', 'бросать', 'тянуть', 'толкать'];
-  const Adjective = ['большой', 'маленький', 'быстрый', 'медленный', 'дружелюбный', 'недружелюбный', 'молодой', 'старый'];
-  const AnimalA = ['кошка', 'цыпленок', 'цыпленок', 'собака', 'лошадь', 'свинья', 'Кролик', 'Овца'];
-  const AnimalB = ['птица', 'рыба', 'лягушка', 'жираф', 'Лев', 'мышь', 'черепаха', 'Дельфин'];
-  const Clothes = ['юбка', 'брюки', 'блузка', 'платье', 'ботинок', 'рубашка', 'пальто', 'туфля'];
-  const Emotion = ['грустный', 'злой', 'счастливый', 'усталый', 'удивленный', 'испуганный', 'улыбающийся', 'смеющийся'];
-  const Categories = [ActionA, ActionB, ActionC, Adjective, AnimalA, AnimalB, Clothes, Emotion];
-  return Categories;
-}
 // Удаляет карточки, если таковые имелись
-function clearPreviosCards() {
+export function clearPreviosCards() {
   const cards = document.querySelectorAll('.card-cont');
   if (cards.length) {
     cards.forEach((el) => {
@@ -42,7 +17,7 @@ function clearPreviosCards() {
 // Указывает имя данной категории карточек
 function setNameСategory(i) {
   const category = document.querySelector('.status-page');
-  category.textContent = categoryArr[i];
+  category.textContent = constansApp.categoryArr[i];
 }
 // Выделяет нужный элемент меню
 function highlightMenuItem(i, listMenu) {
@@ -56,22 +31,25 @@ function reversTo(card, btn, textCont, cardImg, ruText) {
   btn.style.display = 'none';
   setTimeout(() => {
     textCont.textContent = ruText;
-    cardImg.style.transform = 'rotateY(180deg) rotateX(-3deg)';
+    // cardImg.style.transform = 'rotateY(180deg) rotateX(-3deg)';
     textCont.style.transform = 'rotateY(180deg) rotateX(-3deg)';
-  }, 280);
+  }, 270);
 }
 function unRevers(card, btn, textCont, cardImg, enText) {
   card.style.transform = 'rotateY(0deg) rotateX(0deg)';
   setTimeout(() => {
     btn.style.display = 'block';
     textCont.textContent = enText;
-    cardImg.style.transform = 'rotateY(0deg) rotateX(0deg)';
+    // cardImg.style.transform = 'rotateY(0deg) rotateX(0deg)';
     textCont.style.transform = 'rotateY(0deg) rotateX(0deg)';
-  }, 280);
+  }, 270);
 }
 
-export default function createCards(j, listMenu, isMain) {
+export default function createCards(j, listMenu, isMain, trainDifficultWordArr) {
+  const arrCardsFunc = [];
+  constansApp.isMain = isMain;
   if (isMain) {
+    playMode(false);
     clearPreviosCards();
     hideMainCards(false);
     setNameСategory(0);
@@ -82,11 +60,9 @@ export default function createCards(j, listMenu, isMain) {
   clearPreviosCards();
   setNameСategory(j + 1);
   highlightMenuItem(j + 1, listMenu);
-  const categories = createCategoriesArr();
-  const categoriesRu = createCategoriesArrRu();
-  const arrNameRu = categoriesRu[j];
-  const arrName = categories[j];
-  for (let i = 0; i < 8; i += 1) {
+  const arrNameRu = constansApp.wordRuArr[j];
+  const arrName = constansApp.wordEnArr[j];
+  for (let i = 0; i <= constansApp.countCards; i += 1) {
     const audioCard = document.createElement('AUDIO');
     audioCard.src = audio[`A${arrName[i]}`];
     const cardCont = document.createElement('div');
@@ -98,34 +74,56 @@ export default function createCards(j, listMenu, isMain) {
     btnReversImg.src = revers;
     imaga.src = image[arrName[i]];
     imaga.classList.add('cards-img');
+    imaga.id = '12312';
     textInCards.textContent = arrName[i];
     const textInRu = arrNameRu[i];
     cardCont.classList.add('card-cont');
     card.classList.add('cards');
+    card.id = arrName[i];
     btnRevers.classList.add('btn-revers');
     btnReversImg.classList.add('btn-revers-img');
-    card.id = `card${i}`;
     btnRevers.appendChild(btnReversImg);
     card.appendChild(imaga);
     card.appendChild(textInCards);
     card.appendChild(btnRevers);
     cardCont.appendChild(card);
     document.querySelector('.cards-container').appendChild(cardCont);
+
+    const objCard = {
+      cardEl: card,
+      image: imaga,
+      btn: btnRevers,
+      audio: audioCard,
+      text: textInCards,
+      indexCard: i,
+      funcList: null,
+    };
+    arrCardsFunc.push(objCard);
     btnRevers.addEventListener('click', () => {
       reversTo(card, btnRevers, textInCards, imaga, textInRu);
     });
     imaga.addEventListener('click', () => {
-      audioCard.play();
+      if (!constansApp.isGame) {
+        audioCard.play();
+      }
     });
 
     setTimeout(() => {
-      cardCont.addEventListener('mouseleave', (event) => {
+      cardCont.addEventListener('mouseleave', () => {
         if (btnRevers.style.display === 'none') {
           setTimeout(() => {
-            unRevers(card, btnRevers, textInCards, imaga, arrName[i]);
+            if (!constansApp.isGame) {
+              unRevers(card, btnRevers, textInCards, imaga, arrName[i]);
+            }
           }, 500);
         }
       });
     }, 50);
+  }
+  arrCardsFunc.forEach((el, index) => {
+    constansApp.cardsArr[index] = el;
+  });
+  if (constansApp.btnPlayTrain.checked) {
+    playMode(true);
   }
 }

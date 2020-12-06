@@ -3,7 +3,197 @@
     font-weight: normal;
     margin: 0;
     box-sizing: border-box;
+}
+*:focus
+{
+    outline: none;
+}
 
+/*
+Код ниже, кторый связан с переключаемым чекбоксом взят от сюда, и минимально подкорректирован:
+https://codepen.io/himalayasingh/pen/EdVzNL
+ */
+.toggle-button-cover
+{
+    position: relative;
+    left: 110px;
+    width: 100px;
+    height: 70px;
+    box-sizing: border-box;
+    order: 1;
+    transition: 0.3s all;
+}
+
+
+.button-cover, .knobs, .layer
+{
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.button
+{
+    position: relative;
+    top: 50%;
+    width: 100px;
+    height: 45px;
+    margin: -20px auto 0 auto;
+    overflow: hidden;
+    box-sizing: content-box;
+    border: 3px solid #E64A19;
+}
+
+.button, .button .layer
+{
+    border-radius: 5px;
+}
+
+.button.b2
+{
+    border-radius: 2px;
+}
+
+.checkbox
+{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 3;
+}
+
+.knobs
+{
+    z-index: 2;
+}
+
+.layer
+{
+    width: 100%;
+    background-color: #ebf7fc;
+    transition: 0.3s ease all;
+    z-index: 1;
+}
+
+/* Button 1 */
+#button-1 .knobs:before
+{
+    content: 'train';
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 30px;
+    height: 20px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1.5;
+    padding: 9px 4px;
+    background-color: #FF9800;
+    border-radius: 5px;
+    transition: 0.3s cubic-bezier(0.18, 0.89, 0.35, 1.15) all;
+}
+
+#button-1 .checkbox:checked + .knobs:before
+{
+    content: 'play';
+    left: 58px;
+    background-color: #f44336;
+}
+
+#button-1 .checkbox:checked ~ .layer
+{
+    background-color: #fcebeb;
+}
+
+#button-1 .knobs, #button-1 .knobs:before, #button-1 .layer
+{
+    transition: 0.3s ease all;
+}
+/*
+Тут воровство кода заканичвается)
+ */
+
+
+
+footer {
+    position: sticky;
+    background: #FF5722;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+
+    z-index: 10;
+    bottom: 0;
+    height: 60px;
+    border-top: 3px solid #E64A19;
+}
+
+.info-container {
+    margin-left: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 200px;
+    height: 45px;
+}
+
+.star-container {
+    display: none;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 50px;
+    width: 240px;
+    border-radius: 5px;
+    transition: 0.3s all;
+    box-sizing: content-box;
+    border: 2px solid #E64A19;
+}
+.star {
+    width: 23px;
+    height: 23px;
+}
+
+.school-img {
+    height: 30px;
+}
+.git-img {
+    margin-right: 10px;
+    height: 30px;
+}
+.info-in-footer {
+    margin-left: 20px;
+    width: 70px;
+    font-size: 0.7em;
+}
+
+.btn-start-game {
+    position: relative;
+    left: 25px;
+    display: none;
+    transition: 0.3s all;
+    width: 150px;
+    height: 40px;
+    border-radius: 5px;
+    border: 2px solid #E64A19;
+    background: #FF9800;
+}
+.btn-start-game:hover {
+    cursor: pointer;
+    background: #FF8000;
 }
 
 header {
@@ -15,11 +205,12 @@ header {
     background: #FF5722;
 
 
-
+    z-index: 10;
     top: 0;
     height: 70px;
     border-bottom: 4px solid #E64A19;
 }
+
 
 .under-head {
     padding: 0 20px 0 20px;
@@ -34,12 +225,9 @@ header {
     font-size: 1.5em;
 }
 
-.btn-play {
-    width: 60px;
-    height: 30px;
-}
-
 .title-text {
+    transition: 0.3s all;
+    order: 2;
     font-size: 2.5em;
     margin-right: 30px;
     font-weight: normal;
@@ -47,6 +235,7 @@ header {
 }
 
 .burger-btn {
+    order: 0;
     width: 40px;
     height: 40px;
     margin-left: 30px;
@@ -57,9 +246,10 @@ header {
 .bg-menu {
     overflow: hidden;
     position: absolute;
-    left: -320px;
+    top: 70px;
+    left: 0;
     width: 320px;
-    height: 700px;
+    height: 90vh;
     background: #FFFFFF;
     display: block;
     font-size: 1.5em;
@@ -67,16 +257,19 @@ header {
 
 
     border-right: 4px solid #E64A19;
-    border-bottom: 4px solid #E64A19;
 
-    transition: 0.3s all;
+    transition: 0.7s all;
 
-    z-index: 10;
+    z-index: 5;
+}
 
+.bg-menu-hidden {
+    font-size: 0px;
+    width: 0px;
 }
 
 .list-container {
-    min-width: 0;
+    padding-top: 70px;
     padding-right: 20px;
     height: 700px;
     display: flex;
@@ -106,13 +299,13 @@ header {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 }
 
 .cards-main {
+    margin: 20px;
     cursor: pointer;
-    margin-top: 30px;
     width: 306px;
     height: 250px;
     transition: 0.1s all;
@@ -128,44 +321,54 @@ header {
 }
 
 .card-cont {
+    position: relative;
+    margin: 20px;
     width: 306px;
     height: 250px;
-    margin-top: 30px;
+    bottom: 0px;
+    border-radius: 5px;
+    transition: bottom 0.3s;
 }
 .cards {
     position: relative;
     perspective: 1000px;
-
     width: 306px;
     height: 250px;
     border: 4px solid #E64A19;
     border-radius: 5px;
-    background: #FF9800;
-    transition: 1s all;
-
+    background: linear-gradient(43deg, rgba(255,198,180,1) 31%, rgba(255,152,0,1) 53%, rgba(0,212,255,1) 91%);
+    transition: transform 1s, box-shadow 0.3s, bottom 0.3s;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     overflow: hidden;
+    box-shadow: 5px 3px 10px rgba(0,0,0,0.5);
+}
+.cards:hover {
+    box-shadow: 8px 5px 10px rgba(0,0,0,0.5);
+}
+
+.card-cont:hover {
+    bottom: 2px;
 }
 
 
 .btn-revers {
     cursor: pointer;
     position: absolute;
-    bottom: 3px;
-    right: 20px;
+    bottom: 2px;
+    right: 2px;
 
     width: 30px;
     height: 30px;
     border-radius: 8px;
-    border: 3px solid white;
+    border: 3px solid #E64A19;
     box-sizing: content-box;
 }
 
 .btn-revers:hover {
-    box-shadow: 0 0 8px 6px #FFCCBC;
+    box-shadow: 0 0 12px 8px #E64A19;
 }
 
 .btn-revers-img {
@@ -180,6 +383,7 @@ header {
 }
 
 .cards-img {
+    transition: 0.3s all;
     width: 300px;
     height: 200px;
     border-radius: 5px;
@@ -194,4 +398,23 @@ header {
 .cards > p {
     font-size: 1.5em;
     margin-bottom: 6px;
+}
+
+.win-fail-img {
+    display: none;
+    width: 300px;
+    height: 300px;
+}
+
+@media (max-width: 750px) {
+    .title-text {
+        font-size: 1.5em;
+    }
+    .toggle-button-cover {
+        left: 0px;
+    }
+    .info-container {
+        display: none;
+    }
+
 }
