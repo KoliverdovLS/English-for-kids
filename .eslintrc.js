@@ -14,5 +14,6 @@ module.exports = {
     'no-unused-expressions': 'off',
     'import/no-named-as-default': 'off',
     'no-param-reassign': 'off',
+    'no-inner-declarations': 'off',
   },
 };

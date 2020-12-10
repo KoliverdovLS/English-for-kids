@@ -5,7 +5,7 @@ const webpack = require('webpack');
 module.exports = {
 
   entry: {
-    main: path.resolve(__dirname, './src/scripts/script.js'),
+    main: path.resolve(__dirname, './src/scripts/interPoint.js'),
   },
   output: {
     path: path.resolve(__dirname, './dist'),

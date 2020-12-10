@@ -3,7 +3,9 @@ import star from '../images/star.png';
 import starWin from '../images/star-win.png';
 import errorAudio from '../audio/error.mp3';
 import correctAudio from '../audio/correct.mp3';
-import createCards, { clearPreviosCards } from './createCards';
+// eslint-disable-next-line import/no-cycle
+import { createCards, clearPreviosCards } from './createCards';
+import { addValueToStat } from './stat';
 
 // Возвращает рандомный массив с неповторяющимися числами
 function generateArrayRandomNumber(min, max) {
@@ -30,9 +32,12 @@ function resetListener() {
   });
 }
 
+// Функция выйгрыша
 function winGame(noOk) {
   clearPreviosCards();
+  constansApp.winCont.style.display = 'block';
   if (noOk > 0) {
+    constansApp.winText.textContent = `${noOk} - Errors!`;
     constansApp.failImg.style.display = 'block';
     constansApp.failAudio.play();
   } else {
@@ -40,6 +45,7 @@ function winGame(noOk) {
     constansApp.winAudio.play();
   }
   setTimeout(() => {
+    constansApp.winCont.style.display = 'none';
     constansApp.winImg.style.display = 'none';
     constansApp.failImg.style.display = 'none';
     createCards(0, 0, true);
@@ -63,17 +69,20 @@ function addStar(arrStar) {
   }
 }
 
+// Примиает true/false : проигрывает аудио верного/неверного нажатия
 function playCorrectErrorAudio(isCorrect) {
   const audioDOM = document.createElement('AUDIO');
   audioDOM.src = isCorrect ? correctAudio : errorAudio;
   audioDOM.play();
 }
 
+// Делает карточку неактивной (принимает контейнер с карточкой)
 function unclicbleCard(card) {
   card.cardEl.style.opacity = '0.5';
   card.cardEl.removeEventListener('click', card.funcList);
 }
 
+// Переключение режимов игры (прнимает true/false)
 export function playMode(isGame) {
   addStar([]); // Опустошаем контейнер со звездами, если они там были.
   constansApp.cardsArr.forEach((card) => {
@@ -91,16 +100,16 @@ export function playMode(isGame) {
   constansApp.startContainer.style.display = trueGame ? 'block' : 'none';
 }
 
+// Старт игры (принимает true/false)
 export function startStopGame(isStart) {
   if (isStart) {
     constansApp.btnStart.style.display = 'none';
     constansApp.btnRepeatWord.style.display = 'block';
-    const randomArr = generateArrayRandomNumber(0, constansApp.countCards);
+    const randomArr = generateArrayRandomNumber(0, constansApp.cardsArr.length - 1);
     const starArr = [];
     constansApp.btnRepeatWord.removeEventListener('click', constansApp.funcRepeat);
     addStar(starArr); // Запускает фукцию передавая пустой массив, очищая контейнер со звездами
     let i = 0;
-    let ok = 0;
     let notOk = 0;
     constansApp.btnRepeatWord.addEventListener('click', constansApp.funcRepeat = function () {
       constansApp.cardsArr[randomArr[i]].audio.play();
@@ -112,27 +121,25 @@ export function startStopGame(isStart) {
       constansApp.cardsArr.forEach((card) => {
         // cardEl контейнер карточки
         card.cardEl.addEventListener('click', card.funcList = function fn() {
-          if (!constansApp.isGame) return false;
+          if (!constansApp.isGame) return;
           if (card.indexCard === randomArr[i]) {
             starArr.unshift(true);
             addStar(starArr);
             i += 1;
-            ok += 1;
+            addValueToStat(card.text.textContent, 'correct');
             playCorrectErrorAudio(true);
             setTimeout(() => constansApp.cardsArr[randomArr[i]].audio.play(), 800);
-            console.log(`ok - ${ok} | notOk - ${notOk}`);
             unclicbleCard(card);
-            if (i > 7) {
+            if (i > constansApp.cardsArr.length - 1) {
               winGame(notOk);
               resetListener();
-              return true;
             }
           } else {
             playCorrectErrorAudio(false);
             starArr.unshift(false);
             addStar(starArr);
+            addValueToStat(card.text.textContent, 'wrong');
             notOk += 1;
-            console.log(`ok - ${ok} | notOk - ${notOk}`);
           }
         });
       });

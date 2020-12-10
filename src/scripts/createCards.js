@@ -2,18 +2,12 @@ import * as image from '../images/cards/_exportImage';
 import * as audio from '../audio/_exportAudio';
 import revers from '../images/revers.png';
 import hideMainCards from './hideMainCards';
-import {playMode} from './playMode';
+// eslint-disable-next-line import/no-cycle
+import { playMode } from './playMode';
 import constansApp from './app.constans';
+import { addValueToStat } from './stat';
+import { createFuckingState } from './createPageMarkup';
 
-// Удаляет карточки, если таковые имелись
-export function clearPreviosCards() {
-  const cards = document.querySelectorAll('.card-cont');
-  if (cards.length) {
-    cards.forEach((el) => {
-      el.remove();
-    });
-  }
-}
 // Указывает имя данной категории карточек
 function setNameСategory(i) {
   const category = document.querySelector('.status-page');
@@ -31,23 +25,43 @@ function reversTo(card, btn, textCont, cardImg, ruText) {
   btn.style.display = 'none';
   setTimeout(() => {
     textCont.textContent = ruText;
-    // cardImg.style.transform = 'rotateY(180deg) rotateX(-3deg)';
     textCont.style.transform = 'rotateY(180deg) rotateX(-3deg)';
   }, 270);
 }
 function unRevers(card, btn, textCont, cardImg, enText) {
   card.style.transform = 'rotateY(0deg) rotateX(0deg)';
   setTimeout(() => {
-    btn.style.display = 'block';
+    if (!constansApp.isGame) {
+      btn.style.display = 'block';
+    }
     textCont.textContent = enText;
-    // cardImg.style.transform = 'rotateY(0deg) rotateX(0deg)';
     textCont.style.transform = 'rotateY(0deg) rotateX(0deg)';
   }, 270);
 }
 
-export default function createCards(j, listMenu, isMain, trainDifficultWordArr) {
+// Удаляет карточки, если таковые имелись
+export function clearPreviosCards() {
+  const cards = document.querySelectorAll('.card-cont');
+  if (cards.length) {
+    cards.forEach((el) => {
+      el.remove();
+    });
+  }
+  if (constansApp.cardsArr.length) {
+    constansApp.cardsArr = [];
+  }
+}
+
+/*
+  Ниже происходит боль, а имнно костыльные условия,
+  всё потому, что изначлаьно не продумал что придется принимать функции,
+  и в последствии пришлось подлатывать её всем чем можно, лишь бы работало.
+ */
+
+export function createCards(indexListMenuClick, listMenu, isMain, trainDifficultWordArr) {
   const arrCardsFunc = [];
   constansApp.isMain = isMain;
+  // Условия выхода в меню
   if (isMain) {
     playMode(false);
     clearPreviosCards();
@@ -56,33 +70,59 @@ export default function createCards(j, listMenu, isMain, trainDifficultWordArr) 
     highlightMenuItem(0, listMenu);
     return;
   }
+  // Открытие статистики
+  if (indexListMenuClick === 8) {
+    setNameСategory(indexListMenuClick + 1);
+    highlightMenuItem(indexListMenuClick + 1, listMenu);
+    hideMainCards(true);
+    clearPreviosCards();
+    createFuckingState();
+    return;
+  }
+  // Если мы не выходим в статистику или в меню, значит создаём карточки.
   hideMainCards(true);
   clearPreviosCards();
-  setNameСategory(j + 1);
-  highlightMenuItem(j + 1, listMenu);
-  const arrNameRu = constansApp.wordRuArr[j];
-  const arrName = constansApp.wordEnArr[j];
-  for (let i = 0; i <= constansApp.countCards; i += 1) {
-    const audioCard = document.createElement('AUDIO');
-    audioCard.src = audio[`A${arrName[i]}`];
+  // Если это не тренировка сложных слов, то выставляем категорию выбранных карточек
+  if (!trainDifficultWordArr) {
+    setNameСategory(indexListMenuClick + 1);
+    highlightMenuItem(indexListMenuClick + 1, listMenu);
+  } else {
+    constansApp.statContainer.style.display = 'none';
+  }
+  // arrName - массив с названиями карточек, которые мы создаем.
+  const arrName = trainDifficultWordArr || constansApp.wordEnArr[indexListMenuClick];
+  for (let i = 0; i < arrName.length; i += 1) {
+    function createAudio() {
+      const audioCard = document.createElement('AUDIO');
+      audioCard.src = audio[`A${arrName[i]}`];
+      return audioCard;
+    }
+    const audioCard = createAudio();
+    function createImage() {
+      const imaga = document.createElement('img');
+      imaga.src = image[arrName[i]];
+      imaga.classList.add('cards-img');
+      return imaga;
+    }
+    const imaga = createImage();
+    function createBtnRevers() {
+      const btnRevers = document.createElement('div');
+      const btnReversImg = document.createElement('img');
+      btnReversImg.src = revers;
+      btnRevers.classList.add('btn-revers');
+      btnReversImg.classList.add('btn-revers-img');
+      btnRevers.appendChild(btnReversImg);
+      return btnRevers;
+    }
+    const btnRevers = createBtnRevers();
     const cardCont = document.createElement('div');
     const card = document.createElement('div');
-    const imaga = document.createElement('img');
-    const btnRevers = document.createElement('div');
-    const btnReversImg = document.createElement('img');
     const textInCards = document.createElement('p');
-    btnReversImg.src = revers;
-    imaga.src = image[arrName[i]];
-    imaga.classList.add('cards-img');
-    imaga.id = '12312';
     textInCards.textContent = arrName[i];
-    const textInRu = arrNameRu[i];
+    const textInRu = constansApp.objStat[arrName[i]].ru;
     cardCont.classList.add('card-cont');
     card.classList.add('cards');
     card.id = arrName[i];
-    btnRevers.classList.add('btn-revers');
-    btnReversImg.classList.add('btn-revers-img');
-    btnRevers.appendChild(btnReversImg);
     card.appendChild(imaga);
     card.appendChild(textInCards);
     card.appendChild(btnRevers);
@@ -104,6 +144,7 @@ export default function createCards(j, listMenu, isMain, trainDifficultWordArr) 
     });
     imaga.addEventListener('click', () => {
       if (!constansApp.isGame) {
+        addValueToStat(objCard.text.textContent, 'trainClick');
         audioCard.play();
       }
     });
