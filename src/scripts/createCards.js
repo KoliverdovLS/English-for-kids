@@ -52,6 +52,48 @@ export function clearPreviosCards() {
   }
 }
 
+function createAudio(nameCard) {
+  const audioCard = document.createElement('AUDIO');
+  audioCard.src = audio[`A${nameCard}`];
+  return audioCard;
+}
+
+function createImage(nameCard) {
+  const imaga = document.createElement('img');
+  imaga.src = image[nameCard];
+  imaga.classList.add('cards-img');
+  return imaga;
+}
+
+function createTextForCard(nameCard) {
+  const textInCards = document.createElement('p');
+  textInCards.textContent = nameCard;
+  return textInCards;
+}
+
+function createBtnRevers() {
+  const btnRevers = document.createElement('div');
+  const btnReversImg = document.createElement('img');
+  btnReversImg.src = revers;
+  btnRevers.classList.add('btn-revers');
+  btnReversImg.classList.add('btn-revers-img');
+  btnRevers.appendChild(btnReversImg);
+  return btnRevers;
+}
+
+function createObjCard(card, imaga, btnRevers, audioCard, textInCards, i) {
+  const objCard = {
+    cardEl: card,
+    image: imaga,
+    btn: btnRevers,
+    audio: audioCard,
+    text: textInCards,
+    indexCard: i,
+    funcList: null,
+  };
+  return objCard;
+}
+
 /*
   Ниже происходит боль, а имнно костыльные условия,
   всё потому, что изначлаьно не продумал что придется принимать функции,
@@ -92,33 +134,12 @@ export function createCards(indexListMenuClick, listMenu, isMain, trainDifficult
   // arrName - массив с названиями карточек, которые мы создаем.
   const arrName = trainDifficultWordArr || constansApp.wordEnArr[indexListMenuClick];
   for (let i = 0; i < arrName.length; i += 1) {
-    function createAudio() {
-      const audioCard = document.createElement('AUDIO');
-      audioCard.src = audio[`A${arrName[i]}`];
-      return audioCard;
-    }
-    const audioCard = createAudio();
-    function createImage() {
-      const imaga = document.createElement('img');
-      imaga.src = image[arrName[i]];
-      imaga.classList.add('cards-img');
-      return imaga;
-    }
-    const imaga = createImage();
-    function createBtnRevers() {
-      const btnRevers = document.createElement('div');
-      const btnReversImg = document.createElement('img');
-      btnReversImg.src = revers;
-      btnRevers.classList.add('btn-revers');
-      btnReversImg.classList.add('btn-revers-img');
-      btnRevers.appendChild(btnReversImg);
-      return btnRevers;
-    }
-    const btnRevers = createBtnRevers();
     const cardCont = document.createElement('div');
     const card = document.createElement('div');
-    const textInCards = document.createElement('p');
-    textInCards.textContent = arrName[i];
+    const audioCard = createAudio(arrName[i]);
+    const imaga = createImage(arrName[i]);
+    const textInCards = createTextForCard(arrName[i]);
+    const btnRevers = createBtnRevers();
     const textInRu = constansApp.objStat[arrName[i]].ru;
     cardCont.classList.add('card-cont');
     card.classList.add('cards');
@@ -129,15 +150,7 @@ export function createCards(indexListMenuClick, listMenu, isMain, trainDifficult
     cardCont.appendChild(card);
     document.querySelector('.cards-container').appendChild(cardCont);
 
-    const objCard = {
-      cardEl: card,
-      image: imaga,
-      btn: btnRevers,
-      audio: audioCard,
-      text: textInCards,
-      indexCard: i,
-      funcList: null,
-    };
+    const objCard = createObjCard(card, imaga, btnRevers, audioCard, textInCards, i);
     arrCardsFunc.push(objCard);
     btnRevers.addEventListener('click', () => {
       reversTo(card, btnRevers, textInCards, imaga, textInRu);
@@ -148,18 +161,15 @@ export function createCards(indexListMenuClick, listMenu, isMain, trainDifficult
         audioCard.play();
       }
     });
-
-    setTimeout(() => {
-      cardCont.addEventListener('mouseleave', () => {
-        if (btnRevers.style.display === 'none') {
-          setTimeout(() => {
-            if (!constansApp.isGame) {
-              unRevers(card, btnRevers, textInCards, imaga, arrName[i]);
-            }
-          }, 500);
-        }
-      });
-    }, 50);
+    cardCont.addEventListener('mouseleave', () => {
+      if (btnRevers.style.display === 'none') {
+        setTimeout(() => {
+          if (!constansApp.isGame) {
+            unRevers(card, btnRevers, textInCards, imaga, arrName[i]);
+          }
+        }, 500);
+      }
+    });
   }
   arrCardsFunc.forEach((el, index) => {
     constansApp.cardsArr[index] = el;
