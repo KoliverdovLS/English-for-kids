@@ -52,6 +52,22 @@ function createWinLoseImg() {
   constansApp.failImg.classList.add('win-fail-img');
 }
 
+function createButtonsInStat() {
+  const buttonContainer = document.createElement('div');
+  buttonContainer.classList.add('btn-container');
+  const btnResetStat = document.createElement('button');
+  constansApp.btnResetStat = btnResetStat;
+  btnResetStat.classList.add('btn-reset-stat');
+  btnResetStat.textContent = 'Reset';
+  const btnDiffWords = document.createElement('button');
+  constansApp.btnDiffWords = btnDiffWords;
+  btnDiffWords.classList.add('btn-diff-words');
+  btnDiffWords.textContent = 'Train difficult words';
+  buttonContainer.appendChild(btnResetStat);
+  buttonContainer.appendChild(btnDiffWords);
+  return buttonContainer;
+}
+
 export function createHeader() {
   const title = document.createElement('h1');
   const head = document.createElement('header');
@@ -266,21 +282,6 @@ export function createState(isNew) {
   statContainer.classList.add('stat-container');
   constansApp.statContainer = statContainer;
   // Ниже функция создания кнопок в станице со статистикой
-  function createButtonsInStat() {
-    const buttonContainer = document.createElement('div');
-    buttonContainer.classList.add('btn-container');
-    const btnResetStat = document.createElement('button');
-    constansApp.btnResetStat = btnResetStat;
-    btnResetStat.classList.add('btn-reset-stat');
-    btnResetStat.textContent = 'Reset';
-    const btnDiffWords = document.createElement('button');
-    constansApp.btnDiffWords = btnDiffWords;
-    btnDiffWords.classList.add('btn-diff-words');
-    btnDiffWords.textContent = 'Train difficult words';
-    buttonContainer.appendChild(btnResetStat);
-    buttonContainer.appendChild(btnDiffWords);
-    return buttonContainer;
-  }
   constansApp.statContainer.appendChild(createButtonsInStat());
   const table = document.createElement('table');
   constansApp.table = table;
