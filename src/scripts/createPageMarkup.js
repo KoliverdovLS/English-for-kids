@@ -68,6 +68,52 @@ function createButtonsInStat() {
   return buttonContainer;
 }
 
+function createInfoContainer() {
+  const infoContainer = document.createElement('div');
+  const schoolContainer = document.createElement('a');
+  schoolContainer.href = constansApp.linkSchool;
+  const schoolImg = document.createElement('img');
+  schoolImg.src = schoolIcon;
+  const infoInFooter = document.createElement('div');
+  infoInFooter.textContent = 'Created in 2020 by:';
+  const gitContainer = document.createElement('a');
+  gitContainer.href = constansApp.linkGit;
+  const gitImg = document.createElement('img');
+  gitImg.src = gitIcon;
+  infoContainer.classList.add('info-container');
+  schoolImg.classList.add('school-img');
+  infoInFooter.classList.add('info-in-footer');
+  gitImg.classList.add('git-img');
+  schoolContainer.appendChild(schoolImg);
+  gitContainer.appendChild(gitImg);
+  infoContainer.appendChild(schoolContainer);
+  infoContainer.appendChild(infoInFooter);
+  infoContainer.appendChild(gitContainer);
+  return infoContainer;
+}
+function createBtnStartGame() {
+  const btnStartGame = document.createElement('button');
+  btnStartGame.textContent = 'Start';
+  constansApp.btnStart = btnStartGame;
+  btnStartGame.classList.add('btn-start-game');
+  return btnStartGame;
+}
+
+function createBtnRepeatWord() {
+  const btnRepeatWord = document.createElement('button');
+  btnRepeatWord.textContent = 'Repeat';
+  constansApp.btnRepeatWord = btnRepeatWord;
+  btnRepeatWord.classList.add('btn-start-game');
+  return btnRepeatWord;
+}
+
+function createStarContainer() {
+  const starContainer = document.createElement('div');
+  constansApp.startContainer = starContainer;
+  starContainer.classList.add('star-container');
+  return starContainer;
+}
+
 export function createHeader() {
   const title = document.createElement('h1');
   const head = document.createElement('header');
@@ -84,37 +130,10 @@ export function createHeader() {
 
 export function createFooter() {
   const footer = document.createElement('footer');
-  const infoContainer = document.createElement('div');
-  const schoolContainer = document.createElement('a');
-  schoolContainer.href = constansApp.linkSchool;
-  const schoolImg = document.createElement('img');
-  schoolImg.src = schoolIcon;
-  const infoInFooter = document.createElement('div');
-  infoInFooter.textContent = 'Created in 2020 by:';
-  const gitContainer = document.createElement('a');
-  gitContainer.href = constansApp.linkGit;
-  const gitImg = document.createElement('img');
-  gitImg.src = gitIcon;
-  const btnStartGame = document.createElement('button');
-  btnStartGame.textContent = 'Start';
-  constansApp.btnStart = btnStartGame;
-  const btnRepeatWord = document.createElement('button');
-  btnRepeatWord.textContent = 'Repeat';
-  constansApp.btnRepeatWord = btnRepeatWord;
-  const starContainer = document.createElement('div');
-  constansApp.startContainer = starContainer;
-  infoContainer.classList.add('info-container');
-  btnStartGame.classList.add('btn-start-game');
-  btnRepeatWord.classList.add('btn-start-game');
-  schoolImg.classList.add('school-img');
-  infoInFooter.classList.add('info-in-footer');
-  gitImg.classList.add('git-img');
-  starContainer.classList.add('star-container');
-  schoolContainer.appendChild(schoolImg);
-  gitContainer.appendChild(gitImg);
-  infoContainer.appendChild(schoolContainer);
-  infoContainer.appendChild(infoInFooter);
-  infoContainer.appendChild(gitContainer);
+  const infoContainer = createInfoContainer();
+  const btnStartGame = createBtnStartGame();
+  const btnRepeatWord = createBtnRepeatWord();
+  const starContainer = createStarContainer();
   footer.appendChild(infoContainer);
   footer.appendChild(btnStartGame);
   footer.appendChild(btnRepeatWord);
