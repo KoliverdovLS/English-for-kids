@@ -23,11 +23,12 @@ function addElementToListMenu(parent, ...children) {
   return arrListMenu;
 }
 
-function getPercents(corretcCl, wrongCl) {
+export function getPercents(corretcCl, wrongCl) {
   const correctClick = corretcCl;
   const wrongClick = wrongCl;
   const reverso = 100 / (wrongClick + correctClick);
-  const percents = parseInt(reverso * wrongClick, 10) ? parseInt(reverso * wrongClick, 10) : 0;
+  const a = parseInt(reverso * wrongClick, 10);
+  const percents = a || 0;
   return percents;
 }
 

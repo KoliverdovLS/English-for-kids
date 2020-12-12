@@ -2,7 +2,7 @@ import '../page/style.css';
 import {
   createHeader, createMainCards, createMenu,
   createCardsContainer, createFooter, createBtnPlay,
-  createWinLooseData, createState, createFuckingState,
+  createWinLooseData, createState, createFuckingState, getPercents,
 } from './createPageMarkup';
 import { createCards } from './createCards';
 import { playMode, startStopGame } from './playMode';
@@ -62,13 +62,6 @@ constansApp.btnResetStat.addEventListener('click', () => {
   createFuckingState();
 });
 
-function getPercents(corretcCl, wrongCl) {
-  const correctClick = corretcCl;
-  const wrongClick = wrongCl;
-  const reverso = 100 / (wrongClick + correctClick);
-  const percents = parseInt(reverso * wrongClick, 10) ? parseInt(reverso * wrongClick, 10) : 0;
-  return percents;
-}
 // Функция обработки нажатия кнопки тренировки сложных слов.
 constansApp.btnDiffWords.addEventListener('click', () => {
   const words = constansApp.wordEnArr.flat();
