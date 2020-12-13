@@ -2,8 +2,10 @@ import '../page/style.css';
 import {
   createHeader, createMainCards, createMenu,
   createCardsContainer, createFooter, createBtnPlay,
-  createWinLooseData, createState, createFuckingState, getPercents,
+  createWinLooseData, createState, createFuckingState,
+  getPercents,
 } from './createPageMarkup';
+
 import { createCards } from './createCards';
 import { playMode, startStopGame } from './playMode';
 import constansApp from './app.constans';
@@ -24,6 +26,7 @@ createState(true);
 arrListMenu.forEach((element, index) => {
   element.addEventListener('click', () => {
     if (index === 9) {
+      playMode(false);
       constansApp.statContainer.style.display = 'block';
     } else {
       constansApp.statContainer.style.display = 'none';
