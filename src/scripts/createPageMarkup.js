@@ -20,6 +20,7 @@ function addElementToListMenu(parent, ...children) {
     parent.appendChild(element);
     arrListMenu.push(element);
   }
+  constansApp.arrListMenu = arrListMenu;
   return arrListMenu;
 }
 

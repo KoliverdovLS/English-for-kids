@@ -48,7 +48,7 @@ function winGame(noOk) {
     constansApp.winCont.style.display = 'none';
     constansApp.winImg.style.display = 'none';
     constansApp.failImg.style.display = 'none';
-    createCards(0, 0, true);
+    createCards(0, constansApp.arrListMenu, true);
   }, 2000);
 }
 
@@ -128,11 +128,12 @@ export function startStopGame(isStart) {
             i += 1;
             addValueToStat(card.text.textContent, 'correct');
             playCorrectErrorAudio(true);
-            setTimeout(() => constansApp.cardsArr[randomArr[i]].audio.play(), 800);
             unclicbleCard(card);
             if (i > constansApp.cardsArr.length - 1) {
               winGame(notOk);
               resetListener();
+            } else {
+              setTimeout(() => constansApp.cardsArr[randomArr[i]].audio.play(), 800);
             }
           } else {
             playCorrectErrorAudio(false);
