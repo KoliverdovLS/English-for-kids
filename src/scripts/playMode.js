@@ -55,7 +55,7 @@ function winGame(noOk) {
 // Функция заполняет контейнер звездами, по массиву с булевыми значениями
 // true в массиве - winStar, false - star
 function addStar(arrStar) {
-  const countStars = (arrStar.length > 19) ? 20 : arrStar.length;
+  const countStars = (arrStar.length > 17) ? 18 : arrStar.length;
 
   while (constansApp.startContainer.firstChild) {
     constansApp.startContainer.removeChild(constansApp.startContainer.firstChild);
