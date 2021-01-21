@@ -4,6 +4,9 @@
     margin: 0;
     box-sizing: border-box;
 }
+body {
+    overflow: hidden;
+}
 *:focus
 {
     outline: none;
@@ -124,7 +127,8 @@ https://codepen.io/himalayasingh/pen/EdVzNL
 
 
 footer {
-    position: sticky;
+    position: absolute;
+    width: 100%;
     background: #FF5722;
 
     display: flex;
@@ -216,7 +220,7 @@ header {
 
 .under-head {
     padding: 0 20px 0 20px;
-    height: 70px;
+    height: 30px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -224,7 +228,9 @@ header {
 }
 
 .status-page {
-    font-size: 1.5em;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1.2em;
 }
 
 .title-text {
@@ -250,8 +256,8 @@ header {
     position: absolute;
     top: 70px;
     left: 0;
-    width: 320px;
-    height: 90vh;
+    width: 300px;
+    height: 83vh;
     background: #FFFFFF;
     display: block;
     font-size: 1.5em;
@@ -259,7 +265,6 @@ header {
 
 
     border-right: 4px solid #E64A19;
-    border-bottom: 4px solid #E64A19;
 
     transition: 0.7s all;
 
@@ -269,6 +274,7 @@ header {
 .bg-menu-hidden {
     font-size: 0px;
     width: 0px;
+    left: -5px;
 }
 
 .list-container {
@@ -296,13 +302,16 @@ header {
     margin-left: auto;
     margin-right: auto;
     width: 95%;
-    max-width: 1400px;
-    min-height: 78.7vh;
+    max-width: 1500px;
+    max-height: 78vh;
+    overflow: hidden;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    border: 3px solid #E64A19;
+    border-radius: 3px;
 }
 
 .cards-main {
@@ -419,14 +428,8 @@ header {
 }
 
 .stat-container {
-    display: block;
-    position: absolute;
     top: 15vh;
-    overflow: auto;
-    width: 85%;
-    max-height: 650px;
-    border: 3px solid #E64A19;
-    border-radius: 5px;
+    width: 100%;
 }
 
 .btn-container {
@@ -502,7 +505,11 @@ th.sorted[data-order="1"]::after {
 }
 
 
-
+@media screen and (max-width: 1830px) {
+    .cards-container {
+        overflow-y: scroll;
+    }
+}
 
 @media screen and (max-width: 750px) {
     .title-text {
