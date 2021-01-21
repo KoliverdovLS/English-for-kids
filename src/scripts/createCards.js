@@ -6,7 +6,7 @@ import hideMainCards from './hideMainCards';
 import { playMode } from './playMode';
 import constansApp from './app.constans';
 import { addValueToStat } from './stat';
-import { createFuckingState } from './createPageMarkup';
+import { createStateTbody } from './createPageMarkup';
 
 // Указывает имя данной категории карточек
 function setNameСategory(i) {
@@ -118,7 +118,7 @@ export function createCards(indexListMenuClick, listMenu, isMain, trainDifficult
     highlightMenuItem(indexListMenuClick + 1, listMenu);
     hideMainCards(true);
     clearPreviosCards();
-    createFuckingState();
+    createStateTbody();
     return;
   }
   // Если мы не выходим в статистику или в меню, значит создаём карточки.

@@ -2,7 +2,7 @@ import '../page/style.css';
 import {
   createHeader, createMainCards, createMenu,
   createCardsContainer, createFooter, createBtnPlay,
-  createWinLooseData, createState, createFuckingState,
+  createWinLooseData, createStateThead, createStateTbody,
   getPercents,
 } from './createPageMarkup';
 
@@ -20,7 +20,7 @@ createFooter();
 createWinLooseData();
 createCards(0, arrListMenu, true);
 createObjStat();
-createState(true);
+createStateThead(true);
 
 // Обработка нажатия на элемент меню
 arrListMenu.forEach((element, index) => {
@@ -62,7 +62,7 @@ constansApp.btnStart.addEventListener('click', () => {
 // Ресет статистики
 constansApp.btnResetStat.addEventListener('click', () => {
   createObjStat(true);
-  createFuckingState();
+  createStateTbody();
 });
 
 // Функция обработки нажатия кнопки тренировки сложных слов.

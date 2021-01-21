@@ -245,7 +245,7 @@ export function createWinLooseData() {
 
 // Создание таблицы со статистикой, а именно tbody.
 // При обновлении таблицы, она просто пересоздаётся по новым данным
-export function createFuckingState() {
+export function createStateTbody() {
   if (constansApp.tbody) {
     constansApp.table.removeChild(constansApp.tbody);
   }
@@ -296,7 +296,7 @@ export function createFuckingState() {
 }
 
 // Создание thead таблицы
-export function createState(isNew) {
+export function createStateThead(isNew) {
   const arrNameTable = ['EN', 'RU', 'Category', 'Clicks', 'Correct', 'Wrong', '% errors'];
   const statContainer = document.createElement('div');
   statContainer.style.display = isNew ? 'none' : 'block';
